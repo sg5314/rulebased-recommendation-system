@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+    <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css" rel="stylesheet" />
+
+    <style>
+
+        /********************************************
+        * Now Loading
+        ********************************************/
+        #overlay{
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 999;
+            width: 100%;
+            height:100%;
+            display: none;
+            background: rgba(0,0,0,0.6);
+        }
+        .cv-spinner {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .spinner {
+            width: 80px;
+            height: 80px;
+            border: 4px #ddd solid;
+            border-top: 4px #999 solid;
+            border-radius: 50%;
+            animation: sp-anime 0.8s infinite linear;
+        }
+        @keyframes sp-anime {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(359deg); }
+        }
+        .is-hide{
+            display:none;
+        }
+
+        .horizontal-list {
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .item {
+            /* 横スクロール用 */
+            display: inline-block;
+            width: auto;
+
+            /* 見た目調整 */
+            height: 90px;
+            margin: 10px;
+        }
+        .img-boxes{/*画像軍全体*/
+            height: 400px;
+            margin: 10px;
+            position: relative;
+        }
+
+        .choisebox{
+            height: 300px;
+            width: 300px;
+            margin: 50px;
+            position: absolute;
+            top: 30%;
+            left: 15%;
+            -webkit-transform : translate(-50%,-50%);
+            transform : translate(-50%,-50%);
+        }
+
+        .recomendbox{/*推薦画像*/
+            height: 500px;
+            width: 600px;
+            margin: 50px;
+            position: absolute;
+            top: 50%;
+            left: 65%;
+            -webkit-transform : translate(-50%,-50%);
+            transform : translate(-50%,-50%);
+        }
+
+        .selecting{
+            position: relative;
+            border: solid 5px #696969;
+            height: 200px;
+            width: 200px;
+            padding: 30px;
+        }
+
+        .ranking{
+            position: relative;
+            border: solid 5px #696969;
+            height: 110px;
+        }
+        .ranking_title{
+        position: absolute;
+        top: 50%;
+        left: 10%;
+        transform: translateX(-50%) translateY(-30%);
+        font-size: 25px;
+        background: #FFF;
+        /*color: #95ccff;*/
+        color : #696969;
+        font-weight: bold;
+        }
+        .ranking_chair{
+        text-align: center;
+        height: 100px;
+        left: 10%;
+        transform: translateX(90%);
+
+        }
+        .ranking_cabinet{
+        position: absolute;
+        right: 0px;
+        height: 100px;
+        transform: translateX(-30%);
+        }
+
+        .choise-img{/*選択した画像*/
+            display: inline-block;
+            background: rgba(255, 0, 0, 0.4);
+            text-align: right;
+            /*width: 100%;*/
+            position: absolute;
+            top: 55%;
+            left: 50%;
+            -webkit-transform : translate(-50%,-50%);
+            transform : translate(-50%,-50%);
+        }
+        .box-title{/*文字*/
+            font-size: 25px;
+            font-family: "Rounded Mplus 1c";/*var(--bs-font-monospace)!important*/
+            display: inline-block;
+            /*left: 10px;*/
+            line-height: 1;
+            background: #FFF;
+            /*color: #95ccff;*/
+            color : #696969;
+            font-weight: bold;
+        }
+
+    </style>
+
+    <title>推薦システム</title>
+    </head>
+<body>  
+<header>
+    <div class="navbar navbar-dark bg-dark shadow-sm">
+        <div class="container">
+            <div class="navbar-brand d-flex align-items-center">
+            <strong>推薦システム</strong>
+        </div>
+        </div>
+    </div>
+</header>
+
+<!-- loding -->
+<div id="overlay">
+    <div class="cv-spinner">
+        <span class="spinner"></span>
+    </div>
+</div>
+
+<main> 
+
+    <div class="img-boxes">
+        <div class="choisebox">
+            <span class="box-title">　選択した机　</span>
+            <div class="selecting">
+                <img src="../static/img/table_imgs/{{select_img_name}}" alt="" id="choise-img" height = 150px; width = auto;>
+            </div>
+            
+        </div>
+
+        <div class="recomendbox"><span class="box-title">　推薦アイテム　</span>
+                <div class="ranking">
+                    <span class="ranking_title">No.1</span>
+                    <img class="ranking_chair" src="../static/img/chair_imgs/{{no1_chair}}" alt="" height="80px" width = auto;/>
+                    <img class="ranking_cabinet" src="../static/img/cabinet_imgs/{{no1_cabinet}}" alt="" height="80px" width = auto;/>
+                </div>
+                <div class="ranking">
+                    <span class="ranking_title">No.2</span>
+                    <img class="ranking_chair" src="../static/img/chair_imgs/{{no2_chair}}" alt="" height="80px" width = auto;/>
+                    <img class="ranking_cabinet" src="../static/img/cabinet_imgs/{{no2_cabinet}}" alt="" height="80px" width = auto;/>
+                </div>
+                <div class="ranking">
+                    <span class="ranking_title">No.3</span>
+                    <img class="ranking_chair" src="../static/img/chair_imgs/{{no3_chair}}" alt="" height="80px" width = auto;/>
+                    <img class="ranking_cabinet" src="../static/img/cabinet_imgs/{{no3_cabinet}}" alt="" height="80px" width = auto;/>
+                </div>
+        </div>
+    </div>
+    
+        <ul class="horizontal-list">
+            {% for item in dir_list %}
+            <li class="item">
+                <button id = {{item}} onclick="selecting(this.id)" style="border: solid #000000;"><img src="../static/img/table_imgs/{{item}}" id = {{item}} height = 100px; width = auto;  style="display: block; margin: auto;" ></button>
+            </li>
+            {% endfor %}
+        </ul>
+    <form action="/recommendation/" method="post" onsubmit="loading()">
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <input type="submit" name="send" class="btn btn-primary btn-lg"  value="送信">
+            <input id = 'submitid'  hidden name = 'submit-form'></input>
+        </div>
+        
+        
+    </form>
+
+    
+</main>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script>
+    function loading() {      
+        if(document.getElementsByName('submitid').value === ''){
+            window.alert('アイテムを選択してください')
+            return false
+        }else{
+            //リロード画面スタート
+            $("#overlay").fadeIn(100);
+            return true
+        }
+
+    }
+</script>
+
+<script language="javascript" type="text/javascript">
+
+    function selecting(item_name) {
+        var str = document.getElementById('choise-img').src;
+        if (str != 'http://127.0.0.1:5000/static/img/table_imgs/'){
+            var temp = str.replace("http://127.0.0.1:5000/static/img/table_imgs/", "");
+            document.getElementById(temp).style.border = 'solid #000000';
+        }
+        document.getElementById('choise-img').src = '../static/img/table_imgs/'+item_name;
+        
+        //送信のところにセット
+        document.getElementById('submitid').value = item_name;
+        console.log(document.getElementById('submitid').value);
+
+        //選択画像の色を変更
+        document.getElementById(item_name).style.border = 'solid 5px #008040';
+    }
+</script>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></s>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+    -->
+</body>
+</html>
+
+<!--
+        <form action="/selectscene/" method="post" onsubmit="loading()">
+        
+        <ul class="horizontal-list">
+            {% for item in dir_list %}
+            <li class="item">
+                <div>
+                    <button class="simple_square_btn2" type="submit" name="img_name" value={{item}} onclick="loading();"><img src="/static/images/hi2/{{item}}" height = 100px; width = auto;></button>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </form>
+-->

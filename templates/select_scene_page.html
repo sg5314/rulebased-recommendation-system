@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+<style>
+/********************************************
+* Now Loading
+********************************************/
+#overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    width: 100%;
+    height:100%;
+    display: none;
+    background: rgba(0,0,0,0.6);
+}
+.cv-spinner {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.spinner {
+    width: 80px;
+    height: 80px;
+    border: 4px #ddd solid;
+    border-top: 4px #999 solid;
+    border-radius: 50%;
+    animation: sp-anime 0.8s infinite linear;
+}
+@keyframes sp-anime {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(359deg); }
+}
+.is-hide{
+    display:none;
+}
+</style>
+
+    <title>推薦システム</title>
+  </head>
+  <body>  
+<header>
+    <div class="navbar navbar-dark bg-dark shadow-sm">
+      <div class="container">
+        <div class="navbar-brand d-flex align-items-center">
+          <strong>推薦システム</strong>
+        </div>
+        <span class="navbar-text">
+          <strong>現在の枚数：{{scene_now_int}}/100　　</strong> 
+          <strong><progress max = "100" value={{scene_now_int}}></progress></strong> 
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- loding -->
+  <div id="overlay">
+      <div class="cv-spinner">
+          <span class="spinner"></span>
+      </div>
+  </div>
+
+  <main>  
+      <section class="py-1 text-center container">
+        <div class="row py-lg-3">
+          <div class="col-lg-10 col-md-3 mx-auto">
+            <h1 class="fw-light">このシーン画像が好きか嫌いか選択してください</h1>
+          </div>
+        </div>
+      </section>
+      
+        <div>
+          <img src="/static/img/scene_img/{{scene_now_num}}" height = 300px; width = auto; style="display: block; margin: auto;">
+        </div>
+        <br>
+      <form action="/selectscene/" method="post" onsubmit="loading()">
+        <div class="d-grid gap-2 col-6 mx-auto">
+          <input type="submit" name="send" class="btn btn-primary btn-lg"  value="好きです">
+          <input type="submit" name="send" class="btn btn-secondary btn-lg" value="嫌いです">
+        </div>
+      </form>
+    
+    <div hidden id = 'judgeflag'>{{flag}}</div>
+  </main>
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script>
+    function loading() {      
+      if (document.getElementById('judgeflag').textContent == 'OK'){
+        $("#overlay").fadeIn(100);
+      }
+    }
+  
+  </script>
+  
+  
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></s>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>
