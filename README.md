@@ -37,7 +37,7 @@ python demo.py
  
 # Note
  
-注意点など
+このシステムは，Flaskで構築しています．
  
 # Author
  
